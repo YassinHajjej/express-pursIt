@@ -6,21 +6,51 @@ module.exports = {
     show,
     new: newListing,
     create,
-    delete: deleteListing
+    delete: deleteListing,
+    update
 };
+async function update(req, res) {
+    console.log("listing --->")
+
+    try {
+        // Find the listing by ID
+        const listing = await Listing.findById(req.params.id);
+
+        // Check if the listing exists
+        if (!listing) {
+            return res.status(404).send('Listing not found');
+        }
+
+        // Update the listing properties
+        listing.title = req.body.title;
+        listing.description = req.body.description;
+        listing.price = req.body.price;
+
+        // Save the updated listing
+        await listing.save();
+
+        // Redirect back to the listing's page
+        res.redirect(`/listings/${listing._id}`);
+    } catch (error) {
+        // Handle errors
+        console.error('Error updating listing:', error);
+        res.status(500).send('Error updating listing');
+    }
+}
 
 async function deleteListing(req, res) {
     try {
         // Find the listing to delete
-        const listing = await Listing.findOne({ _id: req.params.id, author: req.user._id });
+        await Listing.deleteOne({ _id: req.params.id, author: req.user._id });
+    
 
         // If the listing doesn't exist or the user is not the author, redirect
-        if (!listing) {
-            return res.redirect('/listings');
-        }
+        //if (!listing) {
+            //return res.redirect('/listings');
+       // }
 
-        // Remove the listing
-        await listing.remove();
+        //listing.remove(req.params.id);
+         
 
         // Redirect back to the listings page
         res.redirect('/listings');

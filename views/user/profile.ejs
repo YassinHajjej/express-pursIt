@@ -24,7 +24,7 @@
                     <p>Description: <%= listing.description %></p>
                     <p>Price: <%= listing.price %></p>
                     <!--  delete button for listing -->
-                    <form action="/listings/<%= listing._id %>" method="POST">
+                    <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
                         <button class="delete-btn" type="submit">Delete</button>
                     </form>
@@ -36,7 +36,7 @@
                                 <div class="comment-container">
                                     <p><%= comment.author.name %>: <%= comment.text %></p>
                                     <!-- Delete button for comment -->
-                                    <form action="/comments/<%= listing._id %>/<%= comment._id %>" method="POST">
+                                    <form action="/comments/<%= listing._id %>/<%= comment._id %>?_method=DELETE" method="POST">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <button class="delete-btn" type="submit">Delete</button>
                                     </form>

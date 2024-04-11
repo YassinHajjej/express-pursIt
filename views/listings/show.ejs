@@ -10,9 +10,35 @@
       <p class="listing-detail-price">Price: <%= listing.price %></p>
       <p>Posted By: <%= listing.author ? listing.author.name : 'Unknown' %></p>
       <img src="https://i.ibb.co/hX35TQS/gucci-bag.jpg" alt="gucci-bag" border="0">
+     <!-- Edit button for listing (only shown if the current user is the author) -->
+
+     <% if (user && listing.author && user._id.equals(listing.author._id)) { %>
+      <form style="display: none;" id= "edit-form" action="/listings/<%= listing._id %>?_method=PUT" method="POST">
+          <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+          </div>
+          <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+          </div>
+          <div>
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" required>
+          </div>
+          <div>
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
+          </div>
+          <input type="hidden" id="authorName" name="authorName" value="<%= user.name %>">
+        <button type="submit">Update Listing</button>
+      </form>
+      <button id="edit-toggle">edit Listing</button>
+    <% } %>
+
         <!-- Deleting button for listing (only shown if the current user is the author) -->
       <% if (user && listing.author && user._id.equals(listing.author._id)) { %>
-        <form id="delete-listing-form" action="/listings/<%= listing._id %>" method="POST">
+        <form id="delete-listing-form" action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
           <button type="submit">Delete Listing</button>
         </form>
       <% } %>
@@ -42,8 +68,8 @@
           <p class="comment-text"><%= comment.text %></p>
           <p class="comment-date">Posted At: <%= comment.createdAt.toDateString() %></p>
           <!-- Form action for deleting a comment -->
-          <% if (user && comment.author && user._id.equals(comment.author._id)) { %>
-            <form action="/comments/<%= listing._id %>/<%= comment._id %>" method="POST" class="delete-comment-form">
+          <% if (user?._id.equals(comment.author._id)) { %>
+            <form action="/comments/<%= listing._id %>/<%= comment._id %>?_method=DELETE" method="POST" class="delete-comment-form">
               <!-- Add a hidden input field to override the method and send a DELETE request -->
               <input type="hidden" name="_method" value="DELETE">
               <!-- Add a button to trigger the delete action -->
@@ -56,4 +82,17 @@
   </div>
 </div>
 
+<script>
+  const editForm = document.querySelector("#edit-form")
+  const editButton = document.querySelector("#edit-toggle")
+
+  editButton.addEventListener("click", ()=>{
+    if(editForm.style.display === "block"){
+      editForm.style.display = "none"
+    } else {
+
+      editForm.style.display = "block"
+    }
+  })
+</script>
 <%- include('../partials/footer') %>

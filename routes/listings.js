@@ -16,6 +16,9 @@ router.get('/:id', ensureLoggedIn,listingsCtrl.show);
 router.post('/', ensureLoggedIn, listingsCtrl.create);
 
 // DELETE /listings/:id (delete a listing)
-router.delete('/listings/:id', ensureLoggedIn, listingsCtrl.delete);
+router.delete('/:id', ensureLoggedIn, listingsCtrl.delete);
+// PUT /listings/:id (update a listing)
+router.put('/:id', ensureLoggedIn, listingsCtrl.update); 
+
 
 module.exports = router;
