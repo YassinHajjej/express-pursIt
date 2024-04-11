@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+<div class="container">
+  <h1>Listings</h1>
+  <table id="list">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% listings.forEach(function(listing) { %>
+        <tr>
+          <td><%= listing.title %></td>
+          <td><%= listing.description %></td>
+          <td><%= listing.price %></td>
+          <td><a href="/listings/<%= listing._id %>">DETAILS</a></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../partials/footer') %>

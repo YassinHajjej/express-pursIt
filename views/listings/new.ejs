@@ -1,0 +1,29 @@
+<%- include('../partials/header', { title: 'Add New Listing' }) %>
+
+<div class="container">
+  <h1>Add New Listing</h1>
+
+  <form action="/listings" method="POST"> 
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+    </div>
+    <div>
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" step="0.01" required>
+    </div>
+    <div>
+      <label for="category">Category:</label>
+      <input type="text" id="category" name="category" required>
+    </div>
+    <input type="hidden" id="authorName" name="authorName" value="<%= user.name %>">
+
+    <button type="submit">Add Listing</button>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

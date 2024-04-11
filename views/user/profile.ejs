@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"> <!-- Link to the external CSS file -->
+</head>
+<body>
+
+<%- include('../partials/header', { title: 'User Profile' }) %>
+
+<div class="container">
+    <h1>User Profile</h1>
+    <p>User Name: <%= user.name %></p>
+    <h2>Listings</h2>
+    <ul>
+        <% listings.forEach(listing => { %>
+            <li>
+                <div class="listing-container">
+                    <h3><%= listing.title %></h3>
+                    <img src="https://i.ibb.co/DLF6WyD/burberry.webp" alt="burberry" border="0">
+
+                    <p>Description: <%= listing.description %></p>
+                    <p>Price: <%= listing.price %></p>
+                    <!--  delete button for listing -->
+                    <form action="/listings/<%= listing._id %>" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="delete-btn" type="submit">Delete</button>
+                    </form>
+                      
+                    <h4>Comments</h4>
+                    <ul>
+                        <% listing.comments.forEach(comment => { %>
+                            <li>
+                                <div class="comment-container">
+                                    <p><%= comment.author.name %>: <%= comment.text %></p>
+                                    <!-- Delete button for comment -->
+                                    <form action="/comments/<%= listing._id %>/<%= comment._id %>" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="delete-btn" type="submit">Delete</button>
+                                    </form>
+                                    <!-- Reply button to toggle reply form -->
+                                    <button class="reply-btn" onclick="toggleReplyForm('<%= listing._id %>', '<%= comment._id %>')">Reply</button>
+                                    <!-- Reply form (initially hidden) -->
+                                    <form id="reply-form-<%= listing._id %>-<%= comment._id %>" action="/comments/<%= listing._id %>/<%= comment._id %>/reply" method="POST" style="display: none;">
+                                        <textarea name="replyText" rows="2" cols="40" placeholder="Add a reply"></textarea>
+                                        <button class="reply-btn" type="submit">Reply</button>
+                                    </form>
+                                </div>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+</div>
+
+<script>
+    function toggleReplyForm(listingId, commentId) {
+        const form = document.getElementById(`reply-form-${listingId}-${commentId}`);
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>

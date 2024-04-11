@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+<div class="container">
+  <div class="listing-detail">
+    <div class="listing-detail-header">
+      <h1 class="listing-detail-title"><%= listing.title %></h1>
+      <p class="listing-detail-description"><%= listing.description %></p>
+      <p class="listing-detail-price">Price: <%= listing.price %></p>
+      <p>Posted By: <%= listing.author ? listing.author.name : 'Unknown' %></p>
+      <img src="https://i.ibb.co/hX35TQS/gucci-bag.jpg" alt="gucci-bag" border="0">
+        <!-- Deleting button for listing (only shown if the current user is the author) -->
+      <% if (user && listing.author && user._id.equals(listing.author._id)) { %>
+        <form id="delete-listing-form" action="/listings/<%= listing._id %>" method="POST">
+          <button type="submit">Delete Listing</button>
+        </form>
+      <% } %>
+    </div>
+
+    <!-- Add Comment section -->
+    <h2>Add Comment</h2>
+    <form action="/comments/<%= listing._id %>" method="POST">
+      <div>
+        <label for="text">Comment:</label>
+        <textarea id="text" name="text" rows="4" required></textarea>
+      </div>
+      <button type="submit">Add Comment</button>
+    </form>
+
+    <!-- Display existing comments -->
+    <h2>Comments</h2>
+    <div class="comments">
+      <% listing.comments.forEach(function(comment) { %>
+        <div class="comment">
+          <!-- Display user name -->
+          <% if (comment.author) { %>
+            <p class="comment-author">Author: <%= comment.author.name %></p>
+          <% } else { %>
+            <p class="comment-author">Author: Guest</p>
+          <% } %>
+          <p class="comment-text"><%= comment.text %></p>
+          <p class="comment-date">Posted At: <%= comment.createdAt.toDateString() %></p>
+          <!-- Form action for deleting a comment -->
+          <% if (user && comment.author && user._id.equals(comment.author._id)) { %>
+            <form action="/comments/<%= listing._id %>/<%= comment._id %>" method="POST" class="delete-comment-form">
+              <!-- Add a hidden input field to override the method and send a DELETE request -->
+              <input type="hidden" name="_method" value="DELETE">
+              <!-- Add a button to trigger the delete action -->
+              <button type="submit" class="delete-comment-btn">Delete</button>
+            </form>
+          <% } %>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
