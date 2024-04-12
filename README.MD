@@ -21,11 +21,12 @@
 
 # Linkes
 
-[Click to View Project Planning](https://trello.com/b/0GqHRm3F/purseit-project)
+[Project Planning](https://trello.com/b/0GqHRm3F/purseit-project)
 [GitHub](https://github.com/YassinHajjej)
-[Click to check PurseIt](https://mongoose-purseit-app-bbda7951b25d.herokuapp.com/listings)
+[PurseIt](https://mongoose-purseit-app-bbda7951b25d.herokuapp.com/listings)
 
 # Next Steps
 
 - User can Buy and and sel and get payed on platform (payment Handling)
 - Design enhancment. 
+- AAU i want to be able to add photos 

@@ -42,16 +42,6 @@ async function deleteListing(req, res) {
     try {
         // Find the listing to delete
         await Listing.deleteOne({ _id: req.params.id, author: req.user._id });
-    
-
-        // If the listing doesn't exist or the user is not the author, redirect
-        //if (!listing) {
-            //return res.redirect('/listings');
-       // }
-
-        //listing.remove(req.params.id);
-         
-
         // Redirect back to the listings page
         res.redirect('/listings');
     } catch (error) {
