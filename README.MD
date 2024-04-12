@@ -18,6 +18,8 @@
 - Express.js 
 - Node.js 
 - Mongoose, MongoDB
+- OAuth (Google)
+- EJS for templating
 
 # Linkes
 
