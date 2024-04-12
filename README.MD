@@ -1,4 +1,4 @@
-# <PurseIt Marketplace>
+# <PurseIt>
 "Purseit" is a web application designed to help users buy and sell purses (etc) conveniently. It provides a platform where users can create listings for items they want to sell, browse listings created by other users, and interact with each other through comments. The application allows users to sign up and log in, ensuring that they have personalized experiences. It also includes features such as the ability to add, edit, and delete listings, as well as add and delete comments on listings. With its intuitive user interface and robust functionality, Purseit makes buying and selling items online a seamless experience for its users.
 
 # Screenshot
